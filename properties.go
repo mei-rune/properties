@@ -20,18 +20,21 @@ func init() {
 	}
 }
 
-var LogPrint = func(fmtStr string, args ...interface{}) {
+var logPrint = func(fmtStr string, args ...interface{}) {
 	fmt.Fprintf(os.Stderr, fmtStr, args...)
 	fmt.Fprint(os.Stderr, crlf)
 }
 
+func GetLogPrint() func(fmtStr string, args ...interface{}) {
+	return logPrint
+}
 
 func SetLogPrint(fn func(fmtStr string, args ...interface{})) {
-	LogPrint = fn
+	logPrint = fn
 }
 
 func logPrintf(fmtStr string, args ...interface{}) {
-	LogPrint(fmtStr, args...)
+	logPrint(fmtStr, args...)
 }
 
 func readQouteString(txt string) (string, string) {
