@@ -288,13 +288,23 @@ func UpdateWith(r io.Reader, w io.Writer, updated map[string]string) error {
 			if strings.Contains(txt, k) {
 				ss := strings.SplitN(txt, "=", 2)
 				if 2 == len(ss) {
+					idx := strings.IndexFunc(txt, func(r rune) bool {
+						return !unicode.IsSpace(r)
+					})
+
 					key := strings.TrimSpace(strings.TrimPrefix(strings.TrimSpace(ss[0]), "#"))
 					if key == k {
-						if ss = strings.SplitN(ss[1], "#", 2); 2 == len(ss) {
-							txt = k + "=" + v + " #" + ss[1]
-						} else {
-							txt = k + "=" + v
+						var whitespaces string
+						if idx > 0 {
+							whitespaces = txt[:idx]
 						}
+
+						if ss = strings.SplitN(ss[1], "#", 2); 2 == len(ss) {
+							txt = whitespaces + k + "=" + v + " #" + ss[1]
+						} else {
+							txt = whitespaces + k + "=" + v
+						}
+
 						delete(updatedCopy, k)
 						break
 					}
