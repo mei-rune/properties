@@ -231,7 +231,14 @@ func ExpandAll(cfg map[string]string) map[string]string {
 		if value, ok := cfg[key]; ok {
 			return value
 		}
-		return os.Getenv(key)
+		s := os.Getenv(key)
+		if s != "" {
+			return s
+		}
+		if strings.HasPrefix(key, "env:") {
+			return os.Getenv(strings.TrimPrefix(key, "env:"))
+		}
+		return "${"+key+"}"
 	}
 
 	for i := 0; i < 100; i++ {
