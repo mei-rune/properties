@@ -177,6 +177,15 @@ func ReadFile(nm string) (map[string]string, error) {
 	return Read(f)
 }
 
+func ReadFileWith(nm string, cb func(key, value string)) error {
+	f, e := os.Open(nm)
+	if nil != e {
+		return e
+	}
+	defer f.Close()
+	return ReadWith(f, cb, logPrintf)
+}
+
 func ReadProperties(nm string) (map[string]string, error) {
 	return ReadFile(nm)
 }
