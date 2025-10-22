@@ -75,7 +75,7 @@ d16=abc
 d16=
 
 
-d17 =  " #24 "
+d17 =  " # 24 "
 `
 
 	excepted := map[string]string{"c": "b",
@@ -102,7 +102,7 @@ d17 =  " #24 "
 		"d14": "d 1 4",
 		"d15": "d 1  5",
 		"d16": "",
-		"d17":  " #24 ",
+		"d17":  " # 24 ",
 	}
 
 	actual, e := Read(strings.NewReader(input))
