@@ -70,6 +70,12 @@ email = MAIL地址：service@abc.cn
 d13 = d 13
 d14 = d 1 4
 d15 = d 1  5
+
+d16=abc
+d16=
+
+
+d17 =  " #24 "
 `
 
 	excepted := map[string]string{"c": "b",
@@ -95,6 +101,8 @@ d15 = d 1  5
 		"d13": "d 13",
 		"d14": "d 1 4",
 		"d15": "d 1  5",
+		"d16": "",
+		"d17":  " #24 ",
 	}
 
 	actual, e := Read(strings.NewReader(input))

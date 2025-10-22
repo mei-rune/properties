@@ -219,9 +219,12 @@ func ReadWith(r io.Reader, cb func(key, value string), logf func(fmtStr string, 
 		}
 
 		value, retain := readString(retain, false, false)
-		if len(value) == 0 {
-			continue
-		}
+		
+		// NOTES: 接受 key= ，它在有一个场景下可用，覆盖缺省值
+		// if len(value) == 0 {
+		// 	continue
+		// }
+
 		if retain = skipWhitespace(retain); retain != "" && !strings.HasPrefix(retain, "#") && !strings.HasPrefix(retain, "//") {
 			if logf != nil {
 				logf("行 %d 格式不正确, 值包含空格, 请用引号括起来 - %q", lineCount, txt)
